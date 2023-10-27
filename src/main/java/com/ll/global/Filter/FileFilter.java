@@ -6,8 +6,9 @@ import com.ll.domain.wise.entity.Wise;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileFilter {
-    public static List<Wise> loadFile() {
+public class FileFilter implements Filter {
+    @Override
+    public List<Wise> doFilter() {
         List<Wise> wises = new ArrayList<Wise>();
 
         wises = Files.parseFile(wises, Files.DATABASE_PATH);

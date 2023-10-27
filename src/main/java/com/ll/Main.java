@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        List<Wise> wises = FileFilter.loadFile();
-        DispatcherServlet.service(wises);
+        List<Wise> wises = new FileFilter().doFilter();
+        new DispatcherServlet().doService(wises);
     }
 }

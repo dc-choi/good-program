@@ -2,7 +2,6 @@ package com.ll.domain.wise.application;
 
 import com.ll.domain.file.entity.Files;
 import com.ll.domain.wise.entity.Wise;
-import com.ll.global.common.request.Request;
 
 import java.util.List;
 import java.util.Scanner;
@@ -28,20 +27,20 @@ public class WiseService {
         new Wise().list(wises);
     }
 
-    public void remove(List<Wise> wises, Request request) {
-        boolean isNull = new Wise().delete(wises, request.getId());
+    public void remove(List<Wise> wises, Long id) {
+        boolean isNull = new Wise().delete(wises, id);
 
         if (isNull) {
-            System.out.println(request.getId() + "번 명언은 존재하지 않습니다.");
+            System.out.println(id + "번 명언은 존재하지 않습니다.");
         } else {
-            System.out.println(request.getId() + "번 명언이 삭제되었습니다.");
+            System.out.println(id + "번 명언이 삭제되었습니다.");
         }
     }
 
-    public void modify(List<Wise> wises, Request request, Scanner scanner) {
-        Wise wise = new Wise().get(wises, request.getId());
+    public void modify(List<Wise> wises, Scanner scanner, Long id) {
+        Wise wise = new Wise().get(wises, id);
         if (wise == null) {
-            System.out.println(request.getId() + "번 명언은 존재하지 않습니다.");
+            System.out.println(id + "번 명언은 존재하지 않습니다.");
             return;
         }
 
@@ -52,7 +51,7 @@ public class WiseService {
         System.out.print("작가 : ");
         String author = scanner.nextLine();
 
-        new Wise().update(wises, wise, author, word, request.getId());
+        new Wise().update(wises, wise, author, word, id);
     }
 
     public void build(List<Wise> wises) {
