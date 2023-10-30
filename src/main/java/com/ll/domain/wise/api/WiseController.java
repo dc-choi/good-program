@@ -2,8 +2,6 @@ package com.ll.domain.wise.api;
 
 import com.ll.domain.wise.application.WiseService;
 import com.ll.domain.wise.entity.Wise;
-import com.ll.global.Servlet.HttpMessageConverter;
-import com.ll.global.common.model.ModelAndView;
 import com.ll.global.common.request.Req;
 
 import java.util.List;
@@ -20,53 +18,66 @@ public class WiseController {
         this.wiseService = wiseService;
     }
 
-    public ModelAndView end(Req req, List<Wise> wises) throws RuntimeException {
-        wiseService.end(wises);
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setView(new HttpMessageConverter());
-
-        return modelAndView;
+    public void end(Req req) throws RuntimeException {
+        wiseService.end();
     }
 
-    public ModelAndView add(Req req, List<Wise> wises, Scanner scanner) throws RuntimeException {
-        wiseService.add(wises, scanner);
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setView(new HttpMessageConverter());
+    public void add(Req req, Scanner scanner) throws RuntimeException {
+        System.out.print("명언 : ");
+        String word = scanner.nextLine();
+        System.out.print("작가 : ");
+        String author = scanner.nextLine();
 
-        return modelAndView;
+        Wise wise = wiseService.add(author, word);
+        System.out.println(wise.getId() + "번 명언이 등록되었습니다.");
     }
 
-    public ModelAndView list(Req req, List<Wise> wises) throws RuntimeException {
-        wiseService.list(wises);
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/page/list");
+    public void list(Req req) throws RuntimeException {
+        System.out.println("번호 / 작가 / 명언");
+        System.out.println("----------------------");
+        List<Wise> wises = wiseService.list();
 
-        return modelAndView;
+        wises.forEach(wise -> {
+            System.out.print(wise.getId());
+            System.out.print(" / ");
+            System.out.print(wise.getAuthor());
+            System.out.print(" / ");
+            System.out.print(wise.getWord());
+            System.out.println();
+        });
     }
 
-    public ModelAndView remove(Req req, List<Wise> wises) throws RuntimeException {
+    public void remove(Req req) throws RuntimeException {
         Long id = Long.parseLong(req.getParameter("id"));
-        wiseService.remove(wises, id);
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setView(new HttpMessageConverter());
+        Wise wise = wiseService.get(id);
 
-        return modelAndView;
+        if (wise == null) System.out.println(id + "번 명언은 존재하지 않습니다.");
+        else {
+            wiseService.remove(id);
+            System.out.println(id + "번 명언이 삭제되었습니다.");
+        }
     }
 
-    public ModelAndView modify(Req req, List<Wise> wises, Scanner scanner) throws RuntimeException {
+    public void modify(Req req, Scanner scanner) throws RuntimeException {
         Long id = Long.parseLong(req.getParameter("id"));
-        wiseService.modify(wises, scanner, id);
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setView(new HttpMessageConverter());
+        Wise wise = wiseService.get(id);
 
-        return modelAndView;
+        if (wise == null) System.out.println(id + "번 명언은 존재하지 않습니다.");
+        else {
+            System.out.println("명언(기존) : " + wise.getWord());
+            System.out.print("명언 : ");
+            String word = scanner.nextLine();
+            System.out.println("작가(기존) : " + wise.getAuthor());
+            System.out.print("작가 : ");
+            String author = scanner.nextLine();
+
+            wiseService.modify(id, author, word);
+            System.out.println(id + "번 명언이 수정되었습니다.");
+        }
     }
 
-    public ModelAndView build(Req req, List<Wise> wises) throws RuntimeException {
-        wiseService.build(wises);
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setView(new HttpMessageConverter());
-
-        return modelAndView;
+    public void build(Req req) throws RuntimeException {
+        wiseService.build();
+        System.out.println("data.json 파일의 내용이 갱신되었습니다.");
     }
 }

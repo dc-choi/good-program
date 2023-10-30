@@ -1,10 +1,7 @@
 package com.ll.global.Servlet;
 
-import com.ll.domain.wise.entity.Wise;
-import com.ll.global.common.model.ModelAndView;
 import com.ll.global.common.request.Req;
 
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -41,23 +38,7 @@ import java.util.Scanner;
  * 이를 통해 사용자에게 적절한 에러 페이지를 표시하거나 로깅 등의 작업을 수행할 수 있습니다.
  */
 public class DispatcherServlet {
-    public void doService(List<Wise> wises) {
-        Scanner scanner = new Scanner(System.in);
-
-        do {
-            try {
-                Req req = this.parseRequest(scanner);
-
-                if (this.doDispatch(wises, req, scanner)) continue;
-
-                if (req.getUrl().equals(Req.END)) break;
-            } catch (Exception e) {}
-        } while (true);
-
-        scanner.close();
-    }
-
-    private Req parseRequest(Scanner scanner) {
+    public Req parseRequest(Scanner scanner) {
         Req req;
         String url;
         String params;
@@ -111,16 +92,17 @@ public class DispatcherServlet {
      * 클라이언트의 Accept 헤더나 요청의 확장자 등을 확인하여,
      * 클라이언트가 원하는 형식의 응답을 생성하는데 적절한 HttpMessageConverter나 뷰를 선택합니다.
      */
-    private boolean doDispatch(List<Wise> wises, Req req, Scanner scanner) {
+    public void doDispatch(Req req, Scanner scanner) {
         String validUrl = new HandlerMapping().getHandler(req);
         req.setUrl(validUrl);
 
-        ModelAndView modelAndView = new HandlerAdapter().handle(req, wises, scanner);
-        if (modelAndView == null) return true;
+        new HandlerAdapter().handle(req, scanner);
+        // 실제 스프링로직을 이해할 수 있도록 주석으로 남김.
+        /*
+        if (modelAndView == null) return;
         else if (modelAndView.getView() instanceof HttpMessageConverter) {
             new HttpMessageConverter().run(modelAndView);
         } else new ViewResolver().run(modelAndView);
-
-        return false;
+         */
     }
 }

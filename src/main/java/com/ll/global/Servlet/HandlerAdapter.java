@@ -1,11 +1,8 @@
 package com.ll.global.Servlet;
 
 import com.ll.domain.wise.api.WiseController;
-import com.ll.domain.wise.entity.Wise;
-import com.ll.global.common.model.ModelAndView;
 import com.ll.global.common.request.Req;
 
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -37,19 +34,20 @@ public class HandlerAdapter {
         this.wiseController = wiseController;
     }
 
-    public ModelAndView handle(Req req, List<Wise> wises, Scanner scanner) throws RuntimeException {
-        ModelAndView modelAndView = null;
+
+    public void handle(Req req, Scanner scanner) throws RuntimeException {
+        // ModelAndView modelAndView = null; // 실제 스프링로직을 이해할 수 있도록 주석으로 남김.
 
         switch (req.getUrl()) {
-            case Req.END -> modelAndView = wiseController.end(req, wises);
-            case Req.ADD -> modelAndView = wiseController.add(req, wises, scanner);
-            case Req.LIST -> modelAndView = wiseController.list(req, wises);
-            case Req.REMOVE -> modelAndView = wiseController.remove(req, wises);
-            case Req.MODITY -> modelAndView = wiseController.modify(req, wises, scanner);
-            case Req.BUILD -> modelAndView = wiseController.build(req, wises);
+            case Req.END -> wiseController.end(req);
+            case Req.ADD -> wiseController.add(req, scanner);
+            case Req.LIST -> wiseController.list(req);
+            case Req.REMOVE -> wiseController.remove(req);
+            case Req.MODITY -> wiseController.modify(req, scanner);
+            case Req.BUILD -> wiseController.build(req);
             default -> System.out.println("알 수 없는 명령어입니다.");
         }
 
-        return modelAndView;
+        // return modelAndView;
     }
 }

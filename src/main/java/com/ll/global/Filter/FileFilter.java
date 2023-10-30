@@ -11,7 +11,7 @@ public class FileFilter implements Filter {
     public List<Wise> doFilter() {
         List<Wise> wises = new ArrayList<Wise>();
 
-        wises = Files.parseFile(wises, Files.DATABASE_PATH);
+        wises = Files.parseFile(Files.DATABASE_PATH);
 
         return wises;
     }
