@@ -86,6 +86,6 @@ public class FileWiseRepository implements WiseRepository {
             if (max < wise.getId()) max = wise.getId();
         }
 
-        return max;
+        return max + 1;
     }
 }
