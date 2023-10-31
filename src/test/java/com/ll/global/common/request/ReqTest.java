@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Scanner;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.*;
 
 class ReqTest {
@@ -28,13 +29,12 @@ class ReqTest {
         Scanner scanner = TestUtil.generateScanner(Req.MODITY + "?qwerwqerqwer");
         Req req = new DispatcherServlet().parseRequest(scanner);
 
-        try {
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> {
             req.getParameter("id");
-            fail("Error: 요청을 성공적으로 처리함..."); // 예외가 발생하지 않으면 오류가 발생했다고 처리함.
-        } catch (Exception e) {
-            assertThat(e).isInstanceOf(IllegalArgumentException.class);
-            assertThat(e.getMessage()).isEqualTo("parse Param Error");
-        }
+        });
+
+        assertThat(e).isInstanceOf(IllegalArgumentException.class);
+        assertThat(e.getMessage()).isEqualTo("parse Param Error");
     }
 
     @Test
@@ -43,13 +43,12 @@ class ReqTest {
         Scanner scanner = TestUtil.generateScanner(Req.MODITY + "?qwerwqerqwer=1");
         Req req = new DispatcherServlet().parseRequest(scanner);
 
-        try {
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> {
             req.getParameter("id");
-            fail("Error: 요청을 성공적으로 처리함..."); // 예외가 발생하지 않으면 오류가 발생했다고 처리함.
-        } catch (Exception e) {
-            assertThat(e).isInstanceOf(IllegalArgumentException.class);
-            assertThat(e.getMessage()).isEqualTo("parse Param Error");
-        }
+        });
+
+        assertThat(e).isInstanceOf(IllegalArgumentException.class);
+        assertThat(e.getMessage()).isEqualTo("parse Param Error");
     }
 
     @Test
@@ -58,12 +57,11 @@ class ReqTest {
         Scanner scanner = TestUtil.generateScanner(Req.MODITY);
         Req req = new DispatcherServlet().parseRequest(scanner);
 
-        try {
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> {
             req.getParameter("id");
-            fail("Error: 요청을 성공적으로 처리함..."); // 예외가 발생하지 않으면 오류가 발생했다고 처리함.
-        } catch (Exception e) {
-            assertThat(e).isInstanceOf(IllegalArgumentException.class);
-            assertThat(e.getMessage()).isEqualTo("parse Param Error");
-        }
+        });
+
+        assertThat(e).isInstanceOf(IllegalArgumentException.class);
+        assertThat(e.getMessage()).isEqualTo("parse Param Error");
     }
 }
