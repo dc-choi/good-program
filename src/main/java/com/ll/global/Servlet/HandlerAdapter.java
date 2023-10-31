@@ -12,7 +12,7 @@ import java.util.Scanner;
  * 그 후 HandlerAdapter가 해당 컨트롤러의 메소드를 실제로 호출하는 역할을 수행
  *
  * RequestMappingHandlerAdapter
- * @RequestMapping 어노테이션을 사용하는 메소드를 처리합니다.
+ * /@RequestMapping 어노테이션을 사용하는 메소드를 처리합니다.
  * 이는 현대의 Spring MVC에서 가장 많이 사용되는 방식입니다.
  *
  * HttpRequestHandlerAdapter
@@ -33,7 +33,6 @@ public class HandlerAdapter {
     public HandlerAdapter(WiseController wiseController) {
         this.wiseController = wiseController;
     }
-
 
     public void handle(Req req, Scanner scanner) throws RuntimeException {
         // ModelAndView modelAndView = null; // 실제 스프링로직을 이해할 수 있도록 주석으로 남김.

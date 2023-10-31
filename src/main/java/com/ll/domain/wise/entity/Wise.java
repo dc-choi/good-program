@@ -1,7 +1,5 @@
 package com.ll.domain.wise.entity;
 
-import java.util.List;
-
 public class Wise {
     private Long id;
     private String author;

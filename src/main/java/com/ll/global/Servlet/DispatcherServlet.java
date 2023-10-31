@@ -47,9 +47,8 @@ public class DispatcherServlet {
 
         String input = scanner.nextLine();
         int randomIndex = input.indexOf("?");
-        int equalIndex = input.indexOf("=");
 
-        if (!(randomIndex == -1) &&!(equalIndex == -1)) {
+        if (!(randomIndex == -1)) {
             params = input.substring(randomIndex + 1);
             url = input.substring(0, randomIndex);
             req = new Req(url, params);

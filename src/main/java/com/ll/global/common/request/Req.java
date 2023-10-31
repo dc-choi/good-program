@@ -37,8 +37,11 @@ public class Req {
     }
 
     public String getParameter(String name) throws IllegalArgumentException {
-        int keyStart = this.params.indexOf(name);
+        int keyStart = -1;
+
+        if (this.params != null) keyStart = this.params.indexOf(name);
         if (keyStart == -1) throw new IllegalArgumentException("parse Param Error");
+
         int keyEnd = keyStart + name.length() + 1;
 
         int valueStart = this.params.substring(keyStart, keyEnd).indexOf("=") + 1;

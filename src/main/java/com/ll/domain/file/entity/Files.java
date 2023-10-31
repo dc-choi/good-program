@@ -11,6 +11,8 @@ import java.util.List;
 public class Files {
     public static final String JSON_PATH = "src/main/resources/file/data.json";
     public static final String DATABASE_PATH = "src/main/resources/file/file.json";
+    public static final String TEST_JSON_PATH = "src/test/resources/file/data.json";
+    public static final String TEST_DATABASE_PATH = "src/test/resources/file/file.json";
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     public static void buildFile(List<Wise> wises, String filePath) {
